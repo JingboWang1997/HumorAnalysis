@@ -9,7 +9,7 @@ class LdaTopicIncongruence:
         self.windowSize = 4
         self.shiftSize = 1
         self.vectorLength = 20
-        print('LDA model initialization complete.')
+        print('LDA model initialization complete...')
 
     def buildTopic2Vec(self, nonJokesPath, jokesPath, jokesColumnName, nonJokesColumnName, gloveModel):
         print('building topic to vector model on current corpus...')
@@ -44,10 +44,9 @@ class LdaTopicIncongruence:
                     pass
             topicVector = np.matmul(np.reshape(np.array(probArray), (1, len(probArray))), np.array(topicArray)).reshape(25,)
             self.topic2vec[idx] = topicVector
-        print('topic to vector model complete.')
+        print('topic to vector model complete...')
 
     def text2vec(self, text):
-        # print('querying LDA incongruence measures using list of texts')
         topicAnalysis = {}
         for queryData in text:
             tokenized = utils.simple_preprocess(queryData)
@@ -81,10 +80,15 @@ class LdaTopicIncongruence:
             for i in range(1, len(vectors)):
                 dist = np.linalg.norm(vectors[i]-vectors[i-1])
                 diffs.append(dist)
-            if (len(diffs) > self.vectorLength):
-                diffs = diffs[:self.vectorLength]
-            else:
-                diffs = diffs + ([0.0] * (self.vectorLength - len(diffs)))
+            # if (len(diffs) > self.vectorLength):
+            #     diffs = diffs[:self.vectorLength]
+            # else:
+            #     diffs = diffs + ([0.0] * (self.vectorLength - len(diffs)))
             sentencePlot[item] = diffs
             result_vectors.append(diffs)
         return result_vectors
+
+
+
+
+
